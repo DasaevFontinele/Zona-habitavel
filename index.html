@@ -1,0 +1,605 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Zona Habitável</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0A1024; --bg2:#0D1530; --surface:#111A36; --surface2:#172247; --line:#26335E;
+  --ink:#E8ECF7; --muted:#97A3C4; --gold:#E9A23B; --gold-ink:#1A1405;
+  --cons:#3FBF9A; --opt:#2A7F68; --hot:#E4604E; --cold:#6FA8FF; --warn:#F2C14E;
+  --disp:"Spectral", Cambria, Georgia, serif;
+  --sans:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --maxw:1180px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+a{color:var(--gold)}
+p{margin:0}
+.container{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(10,16,36,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .container{display:flex;align-items:center;gap:24px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand i{width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(233,162,59,.18),0 0 0 9px rgba(63,191,154,.22)}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.links::-webkit-scrollbar{display:none}
+.links a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:8px;white-space:nowrap}
+.links a:hover{color:var(--ink);background:var(--surface)}
+.links a.cta{color:var(--gold-ink);background:var(--gold);font-weight:600}
+@media (max-width:640px){.brand span{display:none}.nav .container{gap:12px}}
+
+/* type */
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(36px,5.6vw,64px);line-height:1.04;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.4vw,38px);line-height:1.15;margin:0;text-wrap:balance}
+h3{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1.25;margin:0;text-wrap:balance}
+.lede{color:var(--muted);font-size:18px;max-width:60ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+
+/* sections */
+section.block{padding-block:clamp(56px,8vw,96px);border-top:1px solid var(--line)}
+section.block:nth-of-type(even){background:var(--bg2)}
+.head{display:grid;gap:12px;max-width:720px;margin-bottom:36px}
+.secnum{font-family:var(--mono);font-size:13px;color:var(--gold)}
+
+/* hero */
+.hero{padding-block:clamp(40px,7vw,88px)}
+.hero .container{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero .container{grid-template-columns:1fr}}
+.hero-copy{display:grid;gap:20px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;text-decoration:none;border-radius:10px;padding:12px 18px;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.btn:hover{filter:brightness(1.08)}
+.facts{display:flex;flex-wrap:wrap;gap:28px;padding-top:8px}
+.facts div{display:grid}
+.facts b{font-family:var(--disp);font-size:28px;color:var(--ink);line-height:1.1}
+.facts span{font-size:13px;color:var(--muted)}
+.hero-art svg{width:100%;height:auto;display:block;max-width:520px;margin-inline:auto}
+@media (prefers-reduced-motion:no-preference){.spin{animation:spin 120s linear infinite;transform-origin:260px 260px}@keyframes spin{to{transform:rotate(360deg)}}}
+
+/* generic grids and cards */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:12px;align-content:start}
+.card p{color:var(--muted);font-size:15px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:1px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:36px;align-items:center}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.prose{display:grid;gap:14px;max-width:62ch}
+.prose p{color:var(--muted)}
+.prose b{color:var(--ink);font-weight:600}
+figure{margin:0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.eq{font-family:var(--mono);font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;white-space:nowrap}
+.eq.big{font-size:16px;padding:14px 16px}
+.eq.wrapok{white-space:normal;line-height:1.7}
+.stepn{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+.compare{border:1px solid var(--line);border-radius:14px;overflow-x:auto;margin-top:20px}
+.compare table{min-width:560px}
+.example{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:16px}
+.example .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.example .row{grid-template-columns:1fr}}
+.result{background:var(--surface2);border-radius:10px;padding:12px 16px;font-size:15px}
+.result b{color:var(--gold)}
+
+/* calculator */
+.calc{display:grid;gap:24px}
+.main{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.main{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:18px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
+.chip:focus-visible,input[type=range]:focus-visible,.btn:focus-visible,.links a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ctrl{display:grid;gap:6px}
+.ctrl .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ctrl label{font-weight:600;font-size:14px}
+.ctrl output{font-family:var(--mono);font-size:14px;color:var(--gold);font-variant-numeric:tabular-nums}
+.ctrl small{color:var(--muted);font-size:12px;line-height:1.45}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.warn{background:rgba(242,193,78,.12);border:1px solid rgba(242,193,78,.5);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13px}
+.verdict{display:grid;gap:6px;border-radius:12px;padding:14px;background:var(--surface2)}
+.pill{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;width:max-content}
+.pill.ext{background:var(--cold);color:#08142E}.pill.in{background:var(--cons);color:#06201A}.pill.int{background:var(--hot);color:#2A0A05}
+.verdict p{font-size:13.5px;color:var(--muted)}
+.viz{padding:14px;gap:10px}
+.viz svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+td.m{font-family:var(--mono)}
+tr.cons td:first-child{color:var(--cons);font-weight:600}
+tr.opt td:first-child{color:#7FD3BA}
+.two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.cap{font-size:13px;color:var(--muted)}
+.livesteps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.livesteps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.ring{transition:r .25s ease, stroke-width .25s ease}}
+
+/* research */
+.funnel{display:grid;gap:12px}
+.fbar{box-sizing:border-box;display:flex;align-items:center;gap:16px;border-radius:12px;padding:14px 18px;background:var(--surface2)}
+.fbar b{font-family:var(--disp);font-size:34px;line-height:1;min-width:84px;font-variant-numeric:tabular-nums}
+.fbar span{font-size:14.5px;color:var(--muted)}
+.fbar.last{background:var(--gold)}.fbar.last b,.fbar.last span{color:var(--gold-ink)}
+.groups{display:grid;gap:14px}
+.grp{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:center}
+.grp .n{font-family:var(--disp);font-size:30px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.grp .bar{height:10px;border-radius:5px;margin-top:6px}
+.grp .t{font-weight:600}
+.grp .d{font-size:13.5px;color:var(--muted)}
+.findings{display:grid;gap:14px;margin-top:8px;padding:0;list-style:none}
+.findings li{display:grid;grid-template-columns:90px 1fr;gap:16px;align-items:baseline;border-top:1px solid var(--line);padding-top:14px}
+.findings li b{font-family:var(--disp);font-size:24px;color:var(--gold)}
+.findings li span{color:var(--muted)}
+
+/* refs */
+.refs{display:grid;gap:10px;padding-left:1.2em;margin:0;color:var(--muted);font-size:14.5px}
+.refs i{color:var(--ink);font-style:italic}
+.author{display:grid;gap:8px}
+.author .mail{font-family:var(--mono);font-size:14px;color:var(--ink);user-select:all}
+footer.site{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:13px}
+footer.site .container{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+</style>
+</head><body>
+
+<nav class="nav" aria-label="Seções">
+  <div class="container">
+    <a class="brand" href="#inicio"><i></i><span>Zona Habitável</span></a>
+    <div class="links">
+      <a href="#conceito">Conceito</a>
+      <a href="#bordas">Bordas</a>
+      <a href="#calculo">Cálculo</a>
+      <a href="#pesquisa">Pesquisa</a>
+      <a href="#referencias">Referências</a>
+      <a class="cta" href="#calculadora">Calculadora</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="container">
+    <div class="hero-copy">
+      <div class="eyebrow">Dissertação de mestrado · PPGF / UFRN</div>
+      <h1>Onde um planeta pode ter água líquida?</h1>
+      <p class="lede">Um guia para calcular a zona habitável de qualquer estrela com três passos e duas grandezas: a temperatura efetiva e a luminosidade. No fim, uma calculadora mostra onde os discos de detritos ficam em relação a essa zona.</p>
+      <div class="btns">
+        <a class="btn primary" href="#calculadora">Abrir a calculadora</a>
+        <a class="btn" href="#calculo">Ver o cálculo passo a passo</a>
+      </div>
+      <div class="facts">
+        <div><b>3 passos</b><span>T* → Seff → distância</span></div>
+        <div><b>2.600–7.200 K</b><span>domínio do modelo</span></div>
+        <div><b>83 estrelas</b><span>analisadas na pesquisa</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg id="heroArt" viewBox="0 0 520 520"></svg>
+    </div>
+  </div>
+</header>
+
+<section class="block" id="conceito">
+  <div class="container">
+    <div class="head">
+      <div class="secnum">01 · Conceito</div>
+      <h2>A faixa onde a água não ferve nem congela</h2>
+      <p class="lede">A zona habitável é o intervalo de distâncias em que um planeta parecido com a Terra consegue manter água líquida na superfície. É o critério mínimo para a vida como a conhecemos.</p>
+    </div>
+    <div class="split">
+      <div class="prose">
+        <p>Perto demais da estrela, a água evapora e acaba perdida para o espaço. Longe demais, os oceanos congelam. Entre esses extremos existe uma faixa com as condições certas.</p>
+        <p>No Sistema Solar, a zona habitável conservativa vai de <b>0,95 a 1,68 UA</b>. A Terra está dentro. Vênus fica do lado quente e Marte perto da borda fria.</p>
+        <p>A posição dessa faixa depende de <b>quanta energia</b> a estrela emite (luminosidade) e do <b>tipo de luz</b> que ela emite (temperatura efetiva).</p>
+      </div>
+      <figure>
+        <svg id="conceptArt" viewBox="0 0 640 230" role="img" aria-label="Faixas quente, habitável e fria ao redor do Sol, com Vênus, Terra e Marte"></svg>
+        <figcaption>Sistema Solar em escala linear. UA = unidade astronômica, a distância média Terra–Sol.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="bordas">
+  <div class="container">
+    <div class="head">
+      <div class="secnum">02 · Bordas</div>
+      <h2>O que define cada borda</h2>
+      <p class="lede">As bordas vêm de modelos climáticos que simulam a atmosfera de um planeta rochoso com H₂O, CO₂ e N₂ sob diferentes quantidades de luz.</p>
+    </div>
+    <div class="grid2">
+      <article class="card">
+        <h3><span class="dot" style="background:var(--hot)"></span>Borda interna</h3>
+        <p>Com mais calor, mais vapor d’água sobe na atmosfera. No alto, a luz ultravioleta quebra as moléculas de H₂O (fotólise) e o hidrogênio escapa para o espaço. O planeta perde seus oceanos. É o <b style="color:var(--ink)">efeito estufa descontrolado</b>.</p>
+      </article>
+      <article class="card">
+        <h3><span class="dot" style="background:var(--cold)"></span>Borda externa</h3>
+        <p>Longe da estrela, o planeta precisa de mais CO₂ para se aquecer. Acima de cerca de 8 bar, o CO₂ passa a espalhar a luz (espalhamento Rayleigh) e resfria mais do que aquece. É o <b style="color:var(--ink)">efeito estufa máximo</b>.</p>
+      </article>
+    </div>
+    <div class="compare">
+      <table>
+        <thead><tr><th>Versão</th><th style="text-align:left">Borda interna</th><th style="text-align:left">Borda externa</th><th style="text-align:left">Critério</th></tr></thead>
+        <tbody>
+          <tr class="cons"><td>Conservativa</td><td style="text-align:left">Estufa descontrolado</td><td style="text-align:left">Estufa máximo</td><td style="text-align:left;white-space:normal">Físico, pelo modelo climático. Usada na pesquisa.</td></tr>
+          <tr class="opt"><td>Otimista</td><td style="text-align:left">Vênus recente</td><td style="text-align:left">Marte primitivo</td><td style="text-align:left;white-space:normal">Empírico: Vênus teve água até ~1 bilhão de anos atrás; Marte, há ~3,8 bilhões.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="calculo">
+  <div class="container">
+    <div class="head">
+      <div class="secnum">03 · Cálculo</div>
+      <h2>O cálculo em três passos</h2>
+      <p class="lede">O modelo de Kopparapu et al. (2014) resume as simulações climáticas em uma fórmula simples. Basta conhecer Teff e L.</p>
+    </div>
+    <div class="grid3">
+      <article class="card">
+        <div class="stepn">PASSO 1</div>
+        <h3>Temperatura relativa ao Sol</h3>
+        <div class="eq big">T* = Teff − 5780 K</div>
+        <p>O modelo mede tudo a partir do Sol. Estrelas mais quentes têm T* positivo; mais frias, negativo.</p>
+      </article>
+      <article class="card">
+        <div class="stepn">PASSO 2</div>
+        <h3>Fluxo que marca cada borda</h3>
+        <div class="eq big">Seff = Seff☉ + aT* + bT*² + cT*³ + dT*⁴</div>
+        <p>Seff é o fluxo recebido em unidades do que a Terra recebe. Estrelas frias emitem mais no infravermelho, que H₂O e CO₂ absorvem bem, então o planeta se aquece com menos fluxo.</p>
+      </article>
+      <article class="card">
+        <div class="stepn">PASSO 3</div>
+        <h3>Converter fluxo em distância</h3>
+        <div class="eq big">d = √( (L/L☉) / Seff ) UA</div>
+        <p>A luz se espalha numa esfera: no dobro da distância, o fluxo cai para um quarto. Invertendo essa lei, a distância sai da luminosidade.</p>
+      </article>
+    </div>
+
+    <div class="example">
+      <div>
+        <div class="eyebrow">Exemplo resolvido</div>
+        <h3 style="margin-top:6px">Estrela F típica: Teff = 6.500 K, L = 3,0 L☉</h3>
+      </div>
+      <div class="row">
+        <div class="eq wrapok">T* = 6500 − 5780<br><b>T* = 720 K</b></div>
+        <div class="eq wrapok">Interna: 1,107 + 0,096 + … = <b>1,208</b><br>Externa: 0,356 + 0,044 + … = <b>0,400</b></div>
+        <div class="eq wrapok">√(3,0 / 1,208) = <b>1,58 UA</b><br>√(3,0 / 0,400) = <b>2,74 UA</b></div>
+      </div>
+      <div class="result">ZH conservativa: <b>1,58 – 2,74 UA</b>. Para o Sol, 0,95 – 1,68 UA. A zona se afasta porque a estrela é mais luminosa e mais quente.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="calculadora">
+  <div class="container calc">
+    <div class="head" style="margin-bottom:12px">
+      <div class="secnum">04 · Calculadora</div>
+      <h2>Calcule a zona habitável</h2>
+      <p class="lede">Escolha um exemplo ou mova os controles. O raio do disco de detritos mostra em qual dos três grupos da pesquisa o sistema cairia.</p>
+    </div>
+
+    <div class="main">
+      <div class="panel" aria-label="Controles">
+        <div class="ctrl">
+          <label>Exemplos</label>
+          <div class="presets" id="presets"></div>
+        </div>
+        <div class="ctrl">
+          <div class="row"><label for="teff">Temperatura efetiva (Teff)</label><output id="teffOut"></output></div>
+          <input type="range" id="teff" min="2400" max="9000" step="10">
+          <small>O modelo vale para 2.600 K a 7.200 K.</small>
+        </div>
+        <div class="ctrl">
+          <div class="row"><label for="lum">Luminosidade (L/L☉)</label><output id="lumOut"></output></div>
+          <input type="range" id="lum" min="-3" max="1.5" step="0.01">
+          <small id="radiusHint"></small>
+        </div>
+        <div class="ctrl">
+          <div class="row"><label for="disk">Raio do disco de detritos</label><output id="diskOut"></output></div>
+          <input type="range" id="disk" min="-1.3" max="1.7" step="0.01">
+        </div>
+        <div class="warn" id="warn" hidden>Teff fora do domínio do modelo. Na pesquisa, 18 estrelas foram excluídas por esse motivo. Os valores abaixo são uma extrapolação.</div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+
+      <div class="panel viz" aria-label="Visão do sistema">
+        <svg id="orbit" viewBox="0 0 640 520" role="img" aria-label="Vista de cima do sistema com a zona habitável e o disco"></svg>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--opt)"></i>ZH otimista</span>
+          <span><i class="sw" style="background:var(--cons)"></i>ZH conservativa</span>
+          <span><i class="sw" style="background:var(--gold)"></i>Disco de detritos</span>
+          <span><i class="sw" style="background:transparent;border:1px dashed var(--muted)"></i>Órbita da Terra (1 UA)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="livesteps">
+      <article class="card">
+        <div class="stepn">PASSO 1</div>
+        <div class="eq" id="s1"></div>
+      </article>
+      <article class="card">
+        <div class="stepn">PASSO 2</div>
+        <div class="eq wrapok" id="s2"></div>
+      </article>
+      <article class="card">
+        <div class="stepn">PASSO 3</div>
+        <div class="eq wrapok" id="s3"></div>
+      </article>
+    </div>
+
+    <div class="panel">
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Limite</th><th>Seff☉</th><th>a</th><th>b</th><th>c</th><th>d</th><th>Seff</th><th>Distância (UA)</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p class="cap">Coeficientes de Kopparapu et al. (2014) para um planeta de 1 massa terrestre (Tabela 3.1 da dissertação).</p>
+    </div>
+
+    <div class="two">
+      <div class="panel viz">
+        <h3>Comparação com o Sistema Solar</h3>
+        <svg id="strip" viewBox="0 0 720 210" role="img" aria-label="Distâncias em escala logarítmica comparadas ao Sistema Solar"></svg>
+        <p class="cap">Escala logarítmica. O cinturão de asteroides fica entre 2 e 4 UA, a referência usada na pesquisa.</p>
+      </div>
+      <div class="panel viz">
+        <h3>Por que Teff importa</h3>
+        <svg id="seff" viewBox="0 0 420 300" role="img" aria-label="Fluxo efetivo das bordas em função da temperatura efetiva"></svg>
+        <p class="cap">Cada curva é uma borda. A linha tracejada é a Teff escolhida; os pontos são os valores de Seff usados no Passo 2.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="pesquisa">
+  <div class="container">
+    <div class="head">
+      <div class="secnum">05 · Pesquisa</div>
+      <h2>O que a dissertação encontrou</h2>
+      <p class="lede">Aplicamos esse cálculo a estrelas com discos de detritos detectados pelo satélite WISE e comparamos o raio de cada disco com a zona habitável da sua estrela.</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Da amostra inicial à final</h3>
+        <div class="funnel">
+          <div class="fbar" style="width:100%"><b>507</b><span>estrelas com excesso infravermelho (Cotten &amp; Song 2016)</span></div>
+          <div class="fbar" style="width:88%"><b>172</b><span>na Sequência Principal, pelo diagrama cor-magnitude do Gaia</span></div>
+          <div class="fbar last" style="width:76%"><b>83</b><span>com L e Teff do Gaia dentro do domínio do modelo</span></div>
+        </div>
+        <p>Cerca de 60% do catálogo inicial são estrelas evoluídas ou binárias. Das 172, 71 não tinham L ou Teff no Gaia e 18 estavam fora de 2.700–7.200 K.</p>
+      </div>
+      <div class="card">
+        <h3>Onde está o disco em relação à ZH</h3>
+        <div class="groups">
+          <div class="grp"><div class="n" style="color:var(--cold)">51</div><div><div class="t">Disco externo à ZH</div><div class="d">Arquitetura parecida com a solar</div><div class="bar" style="width:100%;background:var(--cold)"></div></div></div>
+          <div class="grp"><div class="n" style="color:var(--cons)">23</div><div><div class="t">Disco dentro da ZH</div><div class="d">A poeira ocupa a própria zona habitável</div><div class="bar" style="width:45%;background:var(--cons)"></div></div></div>
+          <div class="grp"><div class="n" style="color:var(--hot)">9</div><div><div class="t">Disco interno à ZH</div><div class="d">A poeira fica antes da borda interna</div><div class="bar" style="width:18%;background:var(--hot)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <ul class="findings" style="margin-top:28px">
+      <li><b>85%</b><span>das estrelas são mais quentes que o Sol, então a maioria das zonas habitáveis fica mais longe que a solar (42 estrelas têm a ZH inteira além da solar).</span></li>
+      <li><b>22</b><span>estrelas têm discos na faixa do cinturão de asteroides (2–4 UA); 40 têm discos maiores e 21, menores.</span></li>
+      <li><b>91%</b><span>têm [Fe/H] &lt; 0. Todas as estrelas com disco externo à ZH, a arquitetura mais parecida com a solar, são pobres em metais.</span></li>
+      <li><b>Ø</b><span>A luminosidade fracional e a temperatura dos discos não mostram tendência com a posição em relação à zona habitável.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="referencias">
+  <div class="container grid2" style="align-items:start">
+    <div class="head" style="margin-bottom:0">
+      <div class="secnum">06 · Referências</div>
+      <h2>Fontes</h2>
+      <ol class="refs">
+        <li>Kopparapu, R. K. et al. (2014). <i>Habitable zones around main-sequence stars: dependence on planetary mass.</i> ApJL 787, L29.</li>
+        <li>Kopparapu, R. K. et al. (2013). <i>Habitable zones around main-sequence stars: new estimates.</i> ApJ 765, 131.</li>
+        <li>Kasting, J. F.; Whitmire, D. P.; Reynolds, R. T. (1993). <i>Habitable zones around main sequence stars.</i> Icarus 101, 108.</li>
+        <li>Cotten, T. H.; Song, I. (2016). <i>A comprehensive census of nearby infrared excess stars.</i> ApJS 225, 15.</li>
+        <li>Gordon, T. A. et al. (2021). Critério de Sequência Principal no diagrama cor-magnitude do Gaia.</li>
+        <li>Wright, E. L. et al. (2010). <i>The Wide-field Infrared Survey Explorer (WISE).</i> AJ 140, 1868.</li>
+      </ol>
+    </div>
+    <div class="card author">
+      <div class="eyebrow">Sobre a pesquisa</div>
+      <h3>Sobre as relações entre zona de habitabilidade e disco de detritos circunstelares</h3>
+      <p>Dissertação de mestrado de <b style="color:var(--ink)">Dasaev Oliveira Fontinele</b>, orientada pelo Prof. Dr. José Renan de Medeiros. Programa de Pós-Graduação em Física, DFTE / UFRN, 2022.</p>
+      <p>Contato</p>
+      <span class="mail">dasaev.fontinele.604@ufrn.edu.br</span>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <span>Zona Habitável · PPGF / UFRN</span>
+    <span>As estrelas F, A e M da calculadora são exemplos ilustrativos, não objetos da amostra.</span>
+  </div>
+</footer>
+
+<script>
+const LIMITS=[
+  {k:'rv', name:'Vênus recente', c:[1.776,2.136e-4,2.533e-8,-1.332e-11,-3.097e-15], cls:'opt'},
+  {k:'rg', name:'Estufa descontrolado', c:[1.107,1.332e-4,1.580e-8,-8.308e-12,-1.931e-15], cls:'cons'},
+  {k:'mg', name:'Estufa máximo', c:[0.356,6.171e-5,1.698e-9,-3.198e-12,-5.575e-16], cls:'cons'},
+  {k:'em', name:'Marte primitivo', c:[0.320,5.547e-5,1.526e-9,-2.874e-12,-5.011e-16], cls:'opt'},
+];
+const PRESETS=[
+  {id:'sol', label:'Sol', teff:5780, L:1, disk:3},
+  {id:'f', label:'Estrela F típica', teff:6500, L:3, disk:6},
+  {id:'a', label:'Estrela A (7.200 K)', teff:7200, L:6, disk:3},
+  {id:'m', label:'Anã M', teff:3500, L:0.03, disk:0.12},
+];
+const $=id=>document.getElementById(id);
+const nf=(x,d=2)=>x.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sci=x=>{ if(x===0) return '0'; const e=Math.floor(Math.log10(Math.abs(x))); const m=x/10**e; const sup={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return nf(m,3)+'·10'+String(e).split('').map(ch=>sup[ch]).join(''); };
+const seffOf=(c,t)=>c[0]+c[1]*t+c[2]*t*t+c[3]*t**3+c[4]*t**4;
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const SANS='IBM Plex Sans, sans-serif', MONO='IBM Plex Mono, monospace';
+
+function starColor(T){
+  const stops=[[2400,[255,140,70]],[3500,[255,178,110]],[5000,[255,222,170]],[5780,[255,240,215]],[6500,[245,245,255]],[7500,[215,225,255]],[9000,[185,205,255]]];
+  for(let i=0;i<stops.length-1;i++){const [t0,c0]=stops[i],[t1,c1]=stops[i+1]; if(T<=t1){const f=Math.max(0,(T-t0)/(t1-t0));return `rgb(${c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')})`;}}
+  return 'rgb(185,205,255)';
+}
+function rng(seed){return ()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};}
+
+/* ---------- hero art ---------- */
+(function(){
+  const svg=$('heroArt'), c=260, rnd=rng(11);
+  for(let i=0;i<70;i++) el('circle',{cx:(rnd()*520).toFixed(1),cy:(rnd()*520).toFixed(1),r:(rnd()*1.1+0.3).toFixed(2),fill:css('--ink'),'fill-opacity':(0.15+rnd()*0.4).toFixed(2)},svg);
+  el('circle',{cx:c,cy:c,r:150,fill:'none',stroke:css('--opt'),'stroke-width':56,'stroke-opacity':0.5},svg);
+  el('circle',{cx:c,cy:c,r:150,fill:'none',stroke:css('--cons'),'stroke-width':34,'stroke-opacity':0.85},svg);
+  el('circle',{cx:c,cy:c,r:92,fill:'none',stroke:css('--muted'),'stroke-dasharray':'3 6','stroke-opacity':0.6},svg);
+  const g=el('g',{class:'spin'},svg);
+  for(let i=0;i<420;i++){const a=rnd()*Math.PI*2, rr=225*(1+(rnd()+rnd()-1)*0.07);
+    el('circle',{cx:(c+rr*Math.cos(a)).toFixed(1),cy:(c+rr*Math.sin(a)).toFixed(1),r:(0.6+rnd()*1.5).toFixed(2),fill:css('--gold'),'fill-opacity':(0.35+rnd()*0.65).toFixed(2)},g);}
+  el('circle',{cx:c+150*Math.cos(-0.7),cy:c+150*Math.sin(-0.7),r:7,fill:'#7FB8FF'},svg);
+  el('circle',{cx:c,cy:c,r:46,fill:css('--gold'),'fill-opacity':0.15},svg);
+  el('circle',{cx:c,cy:c,r:28,fill:'#FFE7B8'},svg);
+  el('text',{x:c,y:c+150+5,fill:'#06201A','font-size':13,'font-weight':600,'font-family':SANS,'text-anchor':'middle'},svg,'zona habitável');
+})();
+
+/* ---------- concept art ---------- */
+(function(){
+  const svg=$('conceptArt'), x0=130, k=220, X=a=>x0+a*k, y=40, h=110;
+  el('rect',{x:x0,y,width:X(0.95)-x0,height:h,fill:css('--hot'),'fill-opacity':0.18},svg);
+  el('rect',{x:X(0.95),y,width:X(1.68)-X(0.95),height:h,fill:css('--cons'),'fill-opacity':0.55},svg);
+  el('rect',{x:X(1.68),y,width:X(2.25)-X(1.68),height:h,fill:css('--cold'),'fill-opacity':0.18},svg);
+  el('circle',{cx:62,cy:y+h/2,r:60,fill:'#FFD58A','fill-opacity':0.15},svg);
+  el('circle',{cx:62,cy:y+h/2,r:42,fill:css('--gold')},svg);
+  el('text',{x:X(0.95)-10,y:y+22,fill:'#F29A8C','font-size':13,'font-weight':600,'font-family':SANS,'text-anchor':'end'},svg,'quente demais');
+  el('text',{x:(X(0.95)+X(1.68))/2,y:y+22,fill:css('--ink'),'font-size':13,'font-weight':600,'font-family':SANS,'text-anchor':'middle'},svg,'zona habitável');
+  el('text',{x:X(1.68)+10,y:y+22,fill:'#A9C8FF','font-size':13,'font-weight':600,'font-family':SANS},svg,'frio demais');
+  [['Vênus',0.72],['Terra',1],['Marte',1.52]].forEach(([n,a])=>{el('circle',{cx:X(a),cy:y+h/2+8,r:7,fill:css('--ink')},svg); el('text',{x:X(a),y:y+h/2+34,fill:css('--ink'),'font-size':12,'font-family':SANS,'text-anchor':'middle'},svg,n);});
+  [0.5,1,1.5,2].forEach(a=>{el('line',{x1:X(a),y1:y+h,x2:X(a),y2:y+h+6,stroke:css('--muted')},svg); el('text',{x:X(a),y:y+h+24,fill:css('--muted'),'font-size':12,'font-family':MONO,'text-anchor':'middle'},svg,String(a).replace('.',',')+' UA');});
+})();
+
+/* ---------- calculator ---------- */
+const state={teff:5780, L:1, disk:3, preset:'sol'};
+PRESETS.forEach(p=>{const b=document.createElement('button');b.className='chip';b.type='button';b.id='p-'+p.id;b.textContent=p.label;b.onclick=()=>{Object.assign(state,{teff:p.teff,L:p.L,disk:p.disk,preset:p.id});sync();};$('presets').appendChild(b);});
+$('teff').oninput=e=>{state.teff=+e.target.value;state.preset=null;render();};
+$('lum').oninput=e=>{state.L=10**(+e.target.value);state.preset=null;render();};
+$('disk').oninput=e=>{state.disk=10**(+e.target.value);state.preset=null;render();};
+function sync(){$('teff').value=state.teff;$('lum').value=Math.log10(state.L);$('disk').value=Math.log10(state.disk);render();}
+
+function compute(){
+  const t=state.teff-5780;
+  const r=LIMITS.map(l=>{const s=seffOf(l.c,t);return {...l,s,d:Math.sqrt(state.L/s)};});
+  return {t,r,ci:r[1].d,co:r[2].d,oi:r[0].d,oo:r[3].d};
+}
+
+function render(){
+  const R=compute();
+  PRESETS.forEach(p=>$('p-'+p.id).setAttribute('aria-pressed',state.preset===p.id));
+  $('teffOut').textContent=state.teff.toLocaleString('pt-BR')+' K';
+  $('lumOut').textContent=nf(state.L,state.L<0.1?3:2)+' L☉';
+  $('diskOut').textContent=nf(state.disk,state.disk<1?2:1)+' UA';
+  const rad=Math.sqrt(state.L)/((state.teff/5780)**2);
+  $('radiusHint').textContent=`Pela lei de Stefan-Boltzmann, L = R²(Teff/5780)⁴ implica R ≈ ${nf(rad,2)} R☉.`;
+  $('warn').hidden = state.teff>=2600 && state.teff<=7200;
+
+  let cls,label,txt;
+  if(state.disk>R.co){cls='ext';label='Disco externo à ZH';txt='Arquitetura parecida com a solar: a poeira fica além da zona habitável. Na pesquisa, 51 das 83 estrelas estão neste grupo.';}
+  else if(state.disk>=R.ci){cls='in';label='Disco dentro da ZH';txt='A poeira ocupa a própria zona habitável. Na pesquisa, 23 das 83 estrelas estão neste grupo.';}
+  else {cls='int';label='Disco interno à ZH';txt='A poeira fica mais perto da estrela do que a borda interna. Na pesquisa, 9 das 83 estrelas estão neste grupo.';}
+  const belt = state.disk<2?'menor que o cinturão de asteroides (< 2 UA)':state.disk<=4?'na faixa do cinturão de asteroides (2–4 UA)':'além do cinturão de asteroides (> 4 UA)';
+  $('verdict').innerHTML=`<span class="pill ${cls}">${label}</span><p>ZH conservativa: <b style="color:var(--ink)">${nf(R.ci)} – ${nf(R.co)} UA</b>. ${txt} O disco está ${belt}.</p>`;
+
+  $('s1').textContent=`T* = ${state.teff.toLocaleString('pt-BR')} − 5780 = ${R.t.toLocaleString('pt-BR')} K`;
+  const g=R.r[1];
+  $('s2').innerHTML=`Interna (estufa descontrolado): Seff = ${nf(g.s,4)}<br>Externa (estufa máximo): Seff = ${nf(R.r[2].s,4)}`;
+  $('s3').innerHTML=`Interna: √(${nf(state.L,3)} / ${nf(g.s,3)}) = ${nf(R.ci)} UA<br>Externa: √(${nf(state.L,3)} / ${nf(R.r[2].s,3)}) = ${nf(R.co)} UA`;
+  $('tbody').innerHTML=R.r.map(l=>`<tr class="${l.cls}"><td>${l.name}</td>${l.c.map(v=>`<td class="m">${Math.abs(v)<0.01?sci(v):nf(v,3)}</td>`).join('')}<td class="m">${nf(l.s,4)}</td><td class="m"><b>${nf(l.d)}</b></td></tr>`).join('');
+
+  drawOrbit(R); drawStrip(R); drawSeff();
+}
+
+function drawOrbit(R){
+  const svg=$('orbit'); svg.innerHTML='';
+  const cx=320, cy=260, maxPx=235;
+  const maxAU=Math.max(R.oo, state.disk)*1.12;
+  const k=maxPx/maxAU;
+  el('rect',{x:0,y:0,width:640,height:520,fill:css('--surface')},svg);
+  const ann=(ri,ro,color,op)=>{const r=(ri+ro)/2*k, w=Math.max(1,(ro-ri)*k); el('circle',{class:'ring',cx,cy,r,fill:'none',stroke:color,'stroke-width':w,'stroke-opacity':op},svg);};
+  ann(R.oi,R.oo,css('--opt'),0.55);
+  ann(R.ci,R.co,css('--cons'),0.75);
+  if(1*k<300) el('circle',{cx,cy,r:k,fill:'none',stroke:css('--muted'),'stroke-dasharray':'4 5','stroke-width':1},svg);
+  const rnd=rng(7), rd=state.disk*k, g=el('g',{},svg);
+  for(let i=0;i<260;i++){const a=rnd()*Math.PI*2, rr=rd*(1+(rnd()+rnd()-1)*0.09);
+    el('circle',{cx:cx+rr*Math.cos(a),cy:cy+rr*Math.sin(a),r:(0.6+rnd()*1.3).toFixed(2),fill:css('--gold'),'fill-opacity':(0.45+rnd()*0.55).toFixed(2)},g);}
+  const sc=starColor(state.teff), sr=Math.max(5,Math.min(16,6+4*Math.log10(state.L+1)*2));
+  el('circle',{cx,cy,r:sr*2.2,fill:sc,'fill-opacity':0.18},svg);
+  el('circle',{cx,cy,r:sr,fill:sc},svg);
+  const col=css('--ink');
+  const lab=(au,txt,dy)=>{const x=cx+au*k; el('line',{x1:x,y1:cy,x2:x,y2:cy+dy*0.8,stroke:col,'stroke-width':1},svg); el('text',{x:x,y:cy+dy,fill:col,'font-size':12,'font-family':MONO,'text-anchor':'middle'},svg,txt);};
+  lab(R.ci,nf(R.ci),-18); lab(R.co,nf(R.co),-18);
+  const dx=cx+state.disk*k*Math.cos(-Math.PI/4), dy=cy+state.disk*k*Math.sin(-Math.PI/4);
+  el('text',{x:Math.min(dx+8,560),y:Math.max(dy-8,20),fill:css('--gold'),'font-size':13,'font-family':SANS,'font-weight':600},svg,`disco · ${nf(state.disk,state.disk<1?2:1)} UA`);
+  const nice=[0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10,20,50,100]; let sb=nice[0]; for(const n of nice){ if(n*k<=140) sb=n; }
+  el('line',{x1:30,y1:492,x2:30+sb*k,y2:492,stroke:col,'stroke-width':2},svg);
+  el('text',{x:30,y:482,fill:css('--muted'),'font-size':12,'font-family':MONO},svg,`${nf(sb,sb<1?2:0)} UA`);
+  el('text',{x:612,y:30,fill:css('--muted'),'font-size':12,'font-family':SANS,'text-anchor':'end'},svg,'escala linear · vista de cima');
+}
+
+function drawStrip(R){
+  const svg=$('strip'); svg.innerHTML='';
+  const x0=110,x1=700, lo=-2, hi=2, X=au=>x0+(Math.log10(au)-lo)/(hi-lo)*(x1-x0);
+  const mut=css('--muted'), ink=css('--ink');
+  [0.01,0.1,1,10,100].forEach(v=>{el('line',{x1:X(v),y1:20,x2:X(v),y2:170,stroke:css('--line'),'stroke-width':1},svg); el('text',{x:X(v),y:190,fill:mut,'font-size':12,'text-anchor':'middle','font-family':MONO},svg,v.toLocaleString('pt-BR')+' UA');});
+  const band=(a,b,y,h,c,op)=>el('rect',{x:X(a),y,width:Math.max(2,X(b)-X(a)),height:h,fill:c,'fill-opacity':op,rx:3},svg);
+  el('text',{x:0,y:62,fill:ink,'font-size':13,'font-weight':600,'font-family':SANS},svg,'Esta estrela');
+  band(R.oi,R.oo,40,34,css('--opt'),0.8); band(R.ci,R.co,40,34,css('--cons'),0.95);
+  const dxp=X(Math.min(100,Math.max(0.01,state.disk)));
+  el('path',{d:`M${dxp} 34 l-7 -12 h14 z`,fill:css('--gold')},svg);
+  el('line',{x1:dxp,y1:36,x2:dxp,y2:80,stroke:css('--gold'),'stroke-width':2},svg);
+  el('text',{x:0,y:132,fill:ink,'font-size':13,'font-weight':600,'font-family':SANS},svg,'Sistema Solar');
+  band(0.75,1.768,110,34,css('--opt'),0.8); band(0.95,1.676,110,34,css('--cons'),0.95);
+  band(2,4,118,18,css('--gold'),0.45);
+  band(30,50,118,18,css('--gold'),0.3);
+  [['Me',0.39],['V',0.72],['T',1],['Ma',1.52],['J',5.2],['S',9.5],['U',19.2],['N',30.1]].forEach(([n,a])=>{el('circle',{cx:X(a),cy:127,r:3.5,fill:ink},svg); el('text',{x:X(a),y:160,fill:mut,'font-size':11,'text-anchor':'middle','font-family':SANS},svg,n);});
+  el('text',{x:X(2.8),y:106,fill:css('--gold'),'font-size':11,'text-anchor':'middle','font-family':SANS},svg,'asteroides');
+  el('text',{x:X(40),y:106,fill:css('--gold'),'font-size':11,'text-anchor':'middle','font-family':SANS},svg,'Kuiper');
+}
+
+function drawSeff(){
+  const svg=$('seff'); svg.innerHTML='';
+  const L=64,Rr=404,T=16,B=250, sx=s=>L+(s/2.2)*(Rr-L), ty=t=>B-(t-2600)/(7200-2600)*(B-T);
+  const mut=css('--muted');
+  [0,0.5,1,1.5,2].forEach(s=>{el('line',{x1:sx(s),y1:T,x2:sx(s),y2:B,stroke:css('--line')},svg); el('text',{x:sx(s),y:B+18,fill:mut,'font-size':11,'text-anchor':'middle','font-family':MONO},svg,nf(s,1));});
+  [3000,4000,5000,6000,7000].forEach(t=>{el('text',{x:L-6,y:ty(t)+4,fill:mut,'font-size':11,'text-anchor':'end','font-family':MONO},svg,t.toLocaleString('pt-BR'));});
+  el('text',{x:(L+Rr)/2,y:B+38,fill:mut,'font-size':12,'text-anchor':'middle','font-family':SANS},svg,'Seff (fluxo relativo ao da Terra)');
+  el('text',{x:14,y:(T+B)/2,fill:mut,'font-size':12,'text-anchor':'middle','font-family':SANS,transform:`rotate(-90 14 ${(T+B)/2})`},svg,'Teff (K)');
+  const colors={opt:css('--opt'),cons:css('--cons')};
+  const tc=Math.max(2600,Math.min(7200,state.teff));
+  LIMITS.forEach(l=>{let d='';for(let tt=2600;tt<=7200;tt+=50){d+=(tt===2600?'M':'L')+sx(seffOf(l.c,tt-5780)).toFixed(1)+' '+ty(tt).toFixed(1);} el('path',{d,fill:'none',stroke:colors[l.cls],'stroke-width':l.cls==='cons'?2.5:1.5},svg);});
+  el('line',{x1:L,y1:ty(tc),x2:Rr,y2:ty(tc),stroke:css('--gold'),'stroke-dasharray':'4 4'},svg);
+  LIMITS.forEach(l=>el('circle',{cx:sx(seffOf(l.c,tc-5780)),cy:ty(tc),r:4.5,fill:css('--gold'),stroke:css('--surface'),'stroke-width':1.5},svg));
+  el('text',{x:Rr,y:ty(tc)-8,fill:css('--gold'),'font-size':12,'text-anchor':'end','font-family':MONO},svg,`${tc.toLocaleString('pt-BR')} K`);
+}
+
+sync();
+</script>
+</body></html>
